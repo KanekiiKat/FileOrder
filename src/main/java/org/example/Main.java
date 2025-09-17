@@ -32,12 +32,21 @@ public class Main {
         }
 
         List<String> lineasTextoConEspacios = textoSeparado.stream().flatMap(List::stream).toList();
+        String a = "asdas";
 
         List<String> lineasTextoFinal = new ArrayList<>();
         for (String linea : lineasTextoConEspacios){
-            lineasTextoFinal.add(linea.trim());
+            if(partesDeComando.length >= 3 && partesDeComando[2].equals("case-insensitive")) {
+                if (linea.length() > 1) {
+                    lineasTextoFinal.add(linea.trim().substring(0, 1).toUpperCase() + linea.trim().substring(1));
+                }else {
+                    lineasTextoFinal.add(linea.trim());
+                }
+            }else {
+                lineasTextoFinal.add(linea.trim());
+            }
         }
-        if (partesDeComando.length == 2 && partesDeComando[1].equals("descendente")){
+        if (partesDeComando.length >= 2 && partesDeComando[1].equals("descendente")){
             lineasTextoFinal.stream().sorted().toList().reversed().forEach(System.out::println);
         }
         else {
